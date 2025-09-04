@@ -15,10 +15,15 @@ function attachNavEventListeners() {
     // User Data screen buttons
     const showUserData = (e: Event) => {
         e.preventDefault();
-        showScreen('userData');
+        showScreen('userDataEdit');
+    };
+    const viewUserData = (e: Event) => {
+        e.preventDefault();
+        showScreen('userDataView');
     };
     document.getElementById('profile-menu-user-data')?.addEventListener('click', showUserData);
-    document.getElementById('menu-user-data')?.addEventListener('click', showUserData);
+    document.getElementById('menu-user-data-edit')?.addEventListener('click', showUserData);
+    document.getElementById('menu-user-data-view')?.addEventListener('click', viewUserData);
 
     // Back button from user data screen
     // This listener is attached to the body because the button doesn't exist on page load

@@ -138,11 +138,23 @@ const menuData = [
     {
         name: 'Ficheros',
         children: [
-            { name: 'Nuevo', href: '#' },
+            {
+                name: 'Nuevo',
+                children: [
+                    { name: 'Tipo 1', href: '#' },
+                    { name: 'Tipo 2', href: '#' },
+                ]
+            },
             { name: 'Abrir', href: '#' },
         ]
     },
-    { name: 'Mi Perfil', href: '#', id: 'menu-user-data' },
+    {
+        name: 'Mi Perfil',
+        children: [
+            { name: 'Modificar', href: '#', id: 'menu-user-data-edit' },
+            { name: 'Ver', href: '#', id: 'menu-user-data-view' },
+        ]
+    },
     { name: 'Logout', href: '#', id: 'menu-logout-btn' },
 ];
 function createMenuHtml(items) {
@@ -167,15 +179,14 @@ export function createMainMenu() {
     nav.innerHTML = createMenuHtml(menuData);
 }
 // --- SCREEN MANAGEMENT ---
-export function createUserDataScreen() {
+export function createUserDataScreen(isReadonly = false) {
     const mainContent = document.getElementById('main-content');
     if (!mainContent)
         return;
     // Crear la pantalla de datos de usuario si no existe
     let userDataScreen = document.getElementById('user-data-screen');
     if (userDataScreen) {
-        userDataScreen.classList.remove('hidden');
-        return;
+        userDataScreen.remove(); // Remove to recreate with correct readonly state
     }
     userDataScreen = document.createElement('div');
     userDataScreen.id = 'user-data-screen';
@@ -190,24 +201,24 @@ export function createUserDataScreen() {
                 </div>
                 <div class="form-group">
                     <label for="user-nickname">Nickname</label>
-                    <input type="text" id="user-nickname" value="testuser">
+                    <input type="text" id="user-nickname" value="testuser" ${isReadonly ? 'readonly' : ''}>
                 </div>
                 <hr>
                 <p style="margin-top: 1rem;">Cambiar Contraseña</p>
                 <div class="form-group">
                     <label for="current-password">Contraseña Actual</label>
-                    <input type="password" id="current-password">
+                    <input type="password" id="current-password" ${isReadonly ? 'readonly' : ''}>
                 </div>
                 <div class="form-group">
                     <label for="new-password">Nueva Contraseña</label>
-                    <input type="password" id="new-password">
+                    <input type="password" id="new-password" ${isReadonly ? 'readonly' : ''}>
                 </div>
                 <div class="form-group">
                     <label for="confirm-password">Confirmar Nueva Contraseña</label>
-                    <input type="password" id="confirm-password">
+                    <input type="password" id="confirm-password" ${isReadonly ? 'readonly' : ''}>
                 </div>
                 <div class="form-actions">
-                    <button type="submit">Guardar Cambios</button>
+                    ${!isReadonly ? '<button type="submit">Guardar Cambios</button>' : ''}
                     <button type="button" id="back-to-main-btn">Volver</button>
                 </div>
             </form>
@@ -218,8 +229,13 @@ export function createUserDataScreen() {
 export function showScreen(screenId) {
     const defaultContent = document.getElementById('default-content-wrapper');
     const userDataScreen = document.getElementById('user-data-screen');
-    if (screenId === 'userData') {
-        createUserDataScreen(); // La crea si no existe
+    if (screenId === 'userDataEdit') {
+        createUserDataScreen(false);
+        defaultContent?.classList.add('hidden');
+        document.getElementById('user-data-screen')?.classList.remove('hidden');
+    }
+    else if (screenId === 'userDataView') {
+        createUserDataScreen(true);
         defaultContent?.classList.add('hidden');
         document.getElementById('user-data-screen')?.classList.remove('hidden');
     }
