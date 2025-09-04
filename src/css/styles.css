@@ -1,0 +1,390 @@
+/* --- RESETS Y GLOBALES --- */
+:root {
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-family);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- TEMAS --- */
+/* 1. Tema Claro (Default) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #212529;
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --accent-color: #17a2b8;
+    --surface-color: #f8f9fa;
+    --border-color: #dee2e6;
+}
+
+/* 2. Tema Oscuro */
+.theme-dark {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --accent-color: #3700b3;
+    --surface-color: #1e1e1e;
+    --border-color: #2c2c2c;
+}
+
+/* 3. Tema Alto Contraste */
+.theme-high-contrast {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --primary-color: #ffff00;
+    --secondary-color: #ff00ff;
+    --accent-color: #00ffff;
+    --surface-color: #1a1a1a;
+    --border-color: #ffffff;
+}
+
+/* 4. Tema Azul */
+.theme-blue {
+    --bg-color: #e7f5ff;
+    --text-color: #0b3d5f;
+    --primary-color: #005fA9;
+    --secondary-color: #5091c3;
+    --accent-color: #0077cc;
+    --surface-color: #ffffff;
+    --border-color: #abd1ed;
+}
+
+/* 5. Tema Verde */
+.theme-green {
+    --bg-color: #e6f8f0;
+    --text-color: #0a4a2f;
+    --primary-color: #00804c;
+    --secondary-color: #4ca67a;
+    --accent-color: #009959;
+    --surface-color: #ffffff;
+    --border-color: #a3d9c2;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* --- UTILIDADES --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- LAYOUT PRINCIPAL --- */
+#app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+#main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+#auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* --- ESTILOS PARA FORMULARIO --- */
+.form-container {
+    background-color: var(--surface-color);
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--border-color);
+}
+
+#form-toggle {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+#form-toggle button {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+#form-toggle button.active {
+    background-color: var(--primary-color);
+    color: var(--bg-color, #fff);
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.auth-form button[type="submit"] {
+    width: 100%;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.auth-form button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+.form-actions button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-actions button[type="submit"] {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.form-actions button[type="button"] {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+}
+
+/* --- ESTILOS PARA HEADER Y MENÚ --- */
+#main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+#main-nav ul li {
+    position: relative;
+}
+
+#main-nav ul li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+}
+
+#main-nav ul li a:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+/* Submenus */
+#main-nav ul ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#main-nav ul li:hover > ul {
+    display: flex;
+}
+
+#main-nav ul ul li {
+    width: 100%;
+}
+
+#main-nav ul ul ul {
+    left: 100%;
+    top: 0;
+}
+
+/* --- ESTILOS PARA THEME SWITCHER --- */
+#theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.theme-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.theme-btn:hover {
+    transform: scale(1.15);
+}
+
+/* --- ESTILOS PARA PERFIL DE USUARIO --- */
+.profile-container {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.profile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-menu ul li a,
+.profile-menu ul li button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    cursor: pointer;
+}
+
+.profile-menu ul li a:hover,
+.profile-menu ul li button:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+.theme-btn[data-theme="default"] {
+    background-color: #ffffff;
+}
+
+.theme-btn[data-theme="theme-dark"] {
+    background-color: #121212;
+}
+
+.theme-btn[data-theme="theme-high-contrast"] {
+    background-color: #000000;
+    border-color: #ffff00;
+}
+
+.theme-btn[data-theme="theme-blue"] {
+    background-color: #e7f5ff;
+    border-color: #005fA9;
+}
+
+.theme-btn[data-theme="theme-green"] {
+    background-color: #e6f8f0;
+    border-color: #00804c;
+}

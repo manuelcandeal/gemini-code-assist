@@ -1,0 +1,15 @@
+{
+  "name": "gemini-ts-spa",
+  "version": "1.0.0",
+  "description": "A simple SPA using TypeScript and CSS",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
