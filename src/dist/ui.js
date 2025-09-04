@@ -66,7 +66,6 @@ export function createThemeSwitcher() {
     const header = document.getElementById('main-header');
     if (!header)
         return;
-    // Crear un contenedor para los elementos de la derecha si no existe
     let rightContainer = document.getElementById('header-right-container');
     if (!rightContainer) {
         rightContainer = document.createElement('div');
@@ -76,6 +75,14 @@ export function createThemeSwitcher() {
     }
     const themeContainer = document.createElement('div');
     themeContainer.id = 'theme-switcher';
+    const themeButton = document.createElement('button');
+    themeButton.id = 'theme-switcher-button';
+    themeButton.innerHTML = `
+        <span>Temas</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+        </svg>
+    `;
     const themes = {
         'default': 'Claro',
         'theme-dark': 'Oscuro',
@@ -83,20 +90,42 @@ export function createThemeSwitcher() {
         'theme-blue': 'Azul',
         'theme-green': 'Verde'
     };
+    const themeList = document.createElement('ul');
+    themeList.className = 'theme-list hidden';
     for (const [value, text] of Object.entries(themes)) {
-        const button = document.createElement('button');
-        button.className = 'theme-btn';
-        button.title = text;
-        button.dataset.theme = value;
-        themeContainer.appendChild(button);
+        const listItem = document.createElement('li');
+        listItem.className = 'theme-list-item';
+        listItem.dataset.theme = value;
+        const colorDot = document.createElement('div');
+        colorDot.className = 'theme-color-dot';
+        colorDot.dataset.theme = value;
+        const themeName = document.createElement('span');
+        themeName.className = 'theme-name';
+        themeName.textContent = text;
+        listItem.appendChild(colorDot);
+        listItem.appendChild(themeName);
+        themeList.appendChild(listItem);
     }
-    themeContainer.addEventListener('click', (e) => {
+    themeContainer.appendChild(themeButton);
+    themeContainer.appendChild(themeList);
+    themeButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        themeList.classList.toggle('hidden');
+    });
+    themeList.addEventListener('click', (e) => {
         const target = e.target;
-        if (target.classList.contains('theme-btn')) {
-            const theme = target.dataset.theme;
+        const themeItem = target.closest('.theme-list-item');
+        if (themeItem) {
+            const theme = themeItem.dataset.theme;
             if (theme) {
                 setTheme(theme);
+                themeList.classList.add('hidden');
             }
+        }
+    });
+    document.addEventListener('click', (e) => {
+        if (!themeContainer.contains(e.target)) {
+            themeList.classList.add('hidden');
         }
     });
     rightContainer.appendChild(themeContainer);
@@ -157,15 +186,26 @@ const menuData = [
     },
     { name: 'Logout', href: '#', id: 'menu-logout-btn' },
 ];
-function createMenuHtml(items) {
+function createMenuHtml(items, level = 0) {
     let html = '<ul>';
     for (const item of items) {
         const hasChildren = item.children && item.children.length > 0;
         const idAttr = item.id ? `id="${item.id}"` : '';
         html += `<li class="${hasChildren ? 'has-submenu' : ''}">`;
-        html += `<a href="${item.href || '#'}" ${idAttr}>${item.name}</a>`;
+        html += `<a href="${item.href || '#'}" ${idAttr}>${item.name}`;
         if (hasChildren) {
-            html += createMenuHtml(item.children);
+            const arrowIcon = level === 0
+                ? `<svg class="menu-arrow down" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                   </svg>`
+                : `<svg class="menu-arrow right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                   </svg>`;
+            html += arrowIcon;
+        }
+        html += `</a>`;
+        if (hasChildren) {
+            html += createMenuHtml(item.children, level + 1);
         }
         html += '</li>';
     }
@@ -176,7 +216,7 @@ export function createMainMenu() {
     const nav = document.getElementById('main-nav');
     if (!nav)
         return;
-    nav.innerHTML = createMenuHtml(menuData);
+    nav.innerHTML = createMenuHtml(menuData, 0); // Pass initial level as 0
 }
 // --- SCREEN MANAGEMENT ---
 export function createUserDataScreen(isReadonly = false) {

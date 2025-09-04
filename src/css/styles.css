@@ -1,6 +1,6 @@
 /* --- RESETS Y GLOBALES --- */
 :root {
-    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-family: -apple-system, BlinkMacMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -286,24 +286,101 @@ hr {
     top: 0;
 }
 
+/* Styles for menu arrows */
+#main-nav ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem; /* Space between text and arrow */
+}
+
+.menu-arrow {
+    width: 16px;
+    height: 16px;
+    fill: currentColor; /* Inherit color from parent */
+    flex-shrink: 0; /* Prevent arrow from shrinking */
+}
+
+/* Rotate down arrow when submenu is open */
+#main-nav ul li.has-submenu:hover > a .menu-arrow.down {
+    transform: rotate(-180deg);
+}
+
+/* Adjust position for right arrow in submenus */
+#main-nav ul ul li.has-submenu > a {
+    padding-right: 2rem; /* Make space for the arrow */
+}
+
 /* --- ESTILOS PARA THEME SWITCHER --- */
 #theme-switcher {
+    position: relative;
+}
+
+#theme-switcher-button {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
-.theme-btn {
-    width: 24px;
-    height: 24px;
+#theme-switcher-button svg {
+    transition: transform 0.2s;
+}
+
+#theme-switcher-button:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.theme-list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 5px);
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 200px;
+    z-index: 100;
+}
+
+.theme-list-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.theme-list-item:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.theme-color-dot {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     border: 2px solid var(--border-color);
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    background-color: var(--bg-color); /* Fallback */
 }
 
-.theme-btn:hover {
-    transform: scale(1.15);
+.theme-name {
+    font-size: 0.95rem;
+    color: var(--text-color);
 }
 
 /* --- ESTILOS PARA PERFIL DE USUARIO --- */
@@ -366,25 +443,24 @@ hr {
     background-color: var(--primary-color);
     color: #fff;
 }
-.theme-btn[data-theme="default"] {
+/* Colores de los puntos */
+.theme-color-dot[data-theme="default"] {
     background-color: #ffffff;
+    border-color: #dee2e6;
 }
-
-.theme-btn[data-theme="theme-dark"] {
+.theme-color-dot[data-theme="theme-dark"] {
     background-color: #121212;
+    border-color: #2c2c2c;
 }
-
-.theme-btn[data-theme="theme-high-contrast"] {
+.theme-color-dot[data-theme="theme-high-contrast"] {
     background-color: #000000;
-    border-color: #ffff00;
+    border: 2px solid #ffff00;
 }
-
-.theme-btn[data-theme="theme-blue"] {
+.theme-color-dot[data-theme="theme-blue"] {
     background-color: #e7f5ff;
     border-color: #005fA9;
 }
-
-.theme-btn[data-theme="theme-green"] {
+.theme-color-dot[data-theme="theme-green"] {
     background-color: #e6f8f0;
     border-color: #00804c;
 }
