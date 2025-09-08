@@ -1,4 +1,3 @@
-
 // --- TYPES ---
 type MenuItem = {
     name: string;
@@ -75,6 +74,7 @@ export function createAuthForm() {
 }
 
 import { setTheme } from './theme.js';
+import './menu.js';
 
 // --- THEME SWITCHER ---
 
@@ -199,67 +199,6 @@ export function createUserProfileIcon(initial: string) {
     });
 }
 
-
-// --- DYNAMIC MENU ---
-
-const menuData: MenuItem[] = [
-    { name: 'Inicio', href: '#', id: 'menu-home' },
-    {
-        name: 'Ficheros',
-        children: [
-            { 
-                name: 'Nuevo', 
-                children: [
-                    { name: 'Tipo 1', href: '#' },
-                    { name: 'Tipo 2', href: '#' },
-                ]
-            },
-            { name: 'Abrir', href: '#' },
-        ]
-    },
-    {
-        name: 'Mi Perfil',
-        children: [
-            { name: 'Modificar', href: '#', id: 'menu-user-data-edit' },
-            { name: 'Ver', href: '#', id: 'menu-user-data-view' },
-        ]
-    },
-    { name: 'Logout', href: '#', id: 'menu-logout-btn' },
-];
-
-function createMenuHtml(items: MenuItem[], level: number = 0): string {
-    let html = '<ul>';
-    for (const item of items) {
-        const hasChildren = item.children && item.children.length > 0;
-        const idAttr = item.id ? `id="${item.id}"` : '';
-        html += `<li class="${hasChildren ? 'has-submenu' : ''}">`;
-        html += `<a href="${item.href || '#'}" ${idAttr}>${item.name}`;
-        if (hasChildren) {
-            const arrowIcon = level === 0
-                ? `<svg class="menu-arrow down" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                   </svg>`
-                : `<svg class="menu-arrow right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                   </svg>`;
-            html += arrowIcon;
-        }
-        html += `</a>`;
-        if (hasChildren) {
-            html += createMenuHtml(item.children!, level + 1);
-        }
-        html += '</li>';
-    }
-    html += '</ul>';
-    return html;
-}
-
-export function createMainMenu() {
-    const nav = document.getElementById('main-nav');
-    if (!nav) return;
-    nav.innerHTML = createMenuHtml(menuData, 0); // Pass initial level as 0
-}
-
 // --- SCREEN MANAGEMENT ---
 
 export function createUserDataScreen(isReadonly = false) {
@@ -328,4 +267,3 @@ export function showScreen(screenId: 'main' | 'userDataEdit' | 'userDataView') {
         defaultContent?.classList.remove('hidden');
     }
 }
-

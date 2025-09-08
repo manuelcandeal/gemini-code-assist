@@ -1,4 +1,4 @@
-import { createMainMenu, createThemeSwitcher, createUserProfileIcon, showScreen } from './ui.js';
+import { createThemeSwitcher, createUserProfileIcon, showScreen } from './ui.js';
 function handleLogout() {
     window.location.reload();
 }
@@ -36,7 +36,6 @@ function showMainApp(userInitial) {
         authContainer.classList.add('hidden');
         appContainer.classList.remove('hidden');
         // Initialize the main app UI
-        createMainMenu();
         createThemeSwitcher();
         createUserProfileIcon(userInitial);
         // Attach all navigation event listeners

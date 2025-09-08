@@ -14,7 +14,30 @@
     <div id="app-container" class="hidden">
         <header id="main-header">
             <nav id="main-nav">
-                <!-- El menú se generará aquí -->
+                <zs3-menu data='[
+                    { "name": "Inicio", "href": "#", "id": "menu-home" },
+                    {
+                        "name": "Ficheros",
+                        "children": [
+                            { 
+                                "name": "Nuevo", 
+                                "children": [
+                                    { "name": "Tipo 1", "href": "#" },
+                                    { "name": "Tipo 2", "href": "#" }
+                                ]
+                            },
+                            { "name": "Abrir", "href": "#" }
+                        ]
+                    },
+                    {
+                        "name": "Mi Perfil",
+                        "children": [
+                            { "name": "Modificar", "href": "#", "id": "menu-user-data-edit" },
+                            { "name": "Ver", "href": "#", "id": "menu-user-data-view" }
+                        ]
+                    },
+                    { "name": "Logout", "href": "#", "id": "menu-logout-btn" }
+                ]'></zs3-menu>
             </nav>
             <div id="theme-switcher">
                 <!-- El selector de temas irá aquí -->

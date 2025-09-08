@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple SPA using TypeScript and CSS",
   "main": "dist/app.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

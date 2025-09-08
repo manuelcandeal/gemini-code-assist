@@ -1,4 +1,4 @@
-import { createMainMenu, createThemeSwitcher, createUserProfileIcon, showScreen } from './ui.js';
+import { createThemeSwitcher, createUserProfileIcon, showScreen } from './ui.js';
 
 function handleLogout() {
     window.location.reload();
@@ -43,7 +43,6 @@ function showMainApp(userInitial: string) {
         appContainer.classList.remove('hidden');
 
         // Initialize the main app UI
-        createMainMenu();
         createThemeSwitcher();
         createUserProfileIcon(userInitial);
 
@@ -71,4 +70,3 @@ export function handleAuth() {
         showMainApp(initial);
     });
 }
-
